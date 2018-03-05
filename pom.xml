@@ -19,7 +19,7 @@
     <finalName>o2o</finalName>
     <plugins>
     	<plugin>
-    		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+    		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin 指定java版本-->
     		<groupId>org.apache.maven.plugins</groupId>
    			<artifactId>maven-compiler-plugin</artifactId>
     		<version>3.7.0</version>
