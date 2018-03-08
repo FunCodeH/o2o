@@ -7,4 +7,17 @@
   		<!-- 指定默认的访问页面 ,不制定时默认访问webapp目录下的jsp文件-->
   		<welcome-file>aaaaa.jsp</welcome-file>  
   </welcome-file-list>
+  
+  <servlet>
+  	<servlet-name>spring-dispatcher</servlet-name>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  	<init-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>classpath:spring/spring-*.xml</param-value>
+  	</init-param>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>spring-dispatcher</servlet-name>
+  	<url-pattern>/</url-pattern>
+  </servlet-mapping>
 </web-app>
