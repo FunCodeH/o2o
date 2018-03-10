@@ -1,0 +1,7 @@
+2018-03-10 11:04:22.921[main] DEBUG com.imooc.o2o.dao.ShopDao.insertShop - ==>  Preparing: INSERT INTO tb_shop(owner_id, area_id, shop_category_id, shop_name, shop_desc, shop_addr, phone, shop_img, priority, create_time, last_edit_time, enable_status, advice) VALUES (?,?,?,?, ?,?,?,?,?,?,?, ?,?) 
+2018-03-10 11:05:49.729[main] DEBUG com.imooc.o2o.dao.ShopDao.insertShop - ==>  Preparing: INSERT INTO tb_shop(owner_id, area_id, shop_category_id, shop_name, shop_desc, shop_addr, phone, shop_img, priority, create_time, last_edit_time, enable_status, advice) VALUES (?,?,?,?, ?,?,?,?,?,?,?, ?,?) 
+2018-03-10 11:05:49.764[main] DEBUG com.imooc.o2o.dao.ShopDao.insertShop - ==> Parameters: 1(Long), 1(Integer), 1(Long), 测试的店铺(String), test(String), test(String), test(String), test(String), null, 2018-03-10 11:05:49.479(Timestamp), null, 0(Integer), 审核中(String)
+2018-03-10 11:05:49.771[main] DEBUG com.imooc.o2o.dao.ShopDao.insertShop - <==    Updates: 1
+2018-03-10 11:21:47.719[main] DEBUG com.imooc.o2o.dao.ShopDao.updateShop - ==>  Preparing: update tb_shop SET shop_addr=?, last_edit_time=? where shop_id=? 
+2018-03-10 11:21:47.748[main] DEBUG com.imooc.o2o.dao.ShopDao.updateShop - ==> Parameters: 大寨路(String), 2018-03-10 11:21:47.434(Timestamp), 1(Long)
+2018-03-10 11:21:47.752[main] DEBUG com.imooc.o2o.dao.ShopDao.updateShop - <==    Updates: 1
