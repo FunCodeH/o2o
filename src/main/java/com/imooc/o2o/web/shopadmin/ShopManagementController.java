@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +21,14 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.imooc.o2o.dto.ShopExecution;
+import com.imooc.o2o.entity.Area;
 import com.imooc.o2o.entity.PersonInfo;
 import com.imooc.o2o.entity.Shop;
+import com.imooc.o2o.entity.ShopCategory;
 import com.imooc.o2o.enums.ShopStateEnum;
 import com.imooc.o2o.exception.ShopOperationException;
+import com.imooc.o2o.service.AreaService;
+import com.imooc.o2o.service.ShopCategoryService;
 import com.imooc.o2o.service.ShopService;
 import com.imooc.o2o.util.HttpServletRequestUtil;
 import com.imooc.o2o.util.ImageUtil;
@@ -36,6 +41,27 @@ public class ShopManagementController {
 	@Autowired
 	private ShopService shopService;
 	
+	@Autowired
+	private ShopCategoryService shopCategoryService;
+	
+	@Autowired
+	private AreaService areaService;
+	
+	/**
+	 * 获取店铺初始化信息，区域，店铺类别等
+	 */
+	@RequestMapping(value="/getshopinitinfo", method={RequestMethod.GET})
+	@ResponseBody
+	private Map<String, Object> getshopInitInfo(){
+		Map<String, Object> modelMap = new HashMap<String, Object>();
+		
+		List<ShopCategory> shopCategoryList = shopCategoryService.getShopCategoryList(new ShopCategory());
+		List<Area> areaList = areaService.getAreaList();
+		modelMap.put("shopCategoryList", shopCategoryList);
+		modelMap.put("areaList", areaList);
+		modelMap.put("success", true);
+		return modelMap;
+	}
 	/**
 	 * 注册商铺
 	 * @param request
