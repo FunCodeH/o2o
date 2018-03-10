@@ -26,7 +26,7 @@ public class AreaController {
 	@Autowired
 	private AreaService areaService;
 	
-	@RequestMapping(value = "/listarea", method = RequestMethod.GET)
+	@RequestMapping(value = "/listarea", method = {RequestMethod.GET})
 	@ResponseBody  //将返回的map自动转化为json格式
 	private Map<String, Object> listArea(){
 		logger.info("======start====");

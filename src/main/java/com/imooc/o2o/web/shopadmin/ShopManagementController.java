@@ -41,7 +41,7 @@ public class ShopManagementController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="/registershop", method=RequestMethod.POST)
+	@RequestMapping(value="/registershop", method={RequestMethod.POST})
 	@ResponseBody   //转化成json格式
 	private Map<String, Object> registerShop(HttpServletRequest request){
 		
