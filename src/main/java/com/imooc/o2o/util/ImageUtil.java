@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,11 +55,11 @@ public class ImageUtil {
 	 * @param targeAddr
 	 * @return
 	 */
-	public static String generateThumbnail(File thumbnail, String targeAddr){
+	public static String generateThumbnail(InputStream thumbnailInputStream, String fileName, String targeAddr){
 		//客户上传得图片名称有时候很奇怪，这里统一生成，不使用原来得名称
 		String realFileName = getRandomFileName();
 		//获取扩展名
-		String extension = getFileExtension(thumbnail);
+		String extension = getFileExtension(fileName);
 		//生成文件路径
 		makeDirPath(targeAddr); 
 		//生成文件地址
@@ -67,7 +68,7 @@ public class ImageUtil {
 		File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
 		logger.debug("current complete addr is:" + PathUtil.getImgBasePath() + relativeAddr);
 		try {
-			Thumbnails.of(thumbnail).size(200, 200)
+			Thumbnails.of(thumbnailInputStream).size(200, 200)
 				.watermark(Positions.BOTTOM_RIGHT,ImageIO.read(new File(basePath + "/watermark.jpg")) , 0.25f)
 				.outputQuality(0.8f).toFile(dest);
 		} catch (IOException e) {
@@ -95,9 +96,8 @@ public class ImageUtil {
 	 * @param thumbnail
 	 * @return
 	 */
-	private static String getFileExtension(File cFile) {
-		String originalFileName = cFile.getName();
-		return originalFileName.substring(originalFileName.lastIndexOf("."));
+	private static String getFileExtension(String fileName) {
+		return fileName.substring(fileName.lastIndexOf("."));
 	}
 
 	/**
