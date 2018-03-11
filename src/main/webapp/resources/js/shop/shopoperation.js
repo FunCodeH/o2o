@@ -3,8 +3,7 @@
  */
 $(function(){
 	var initUrl = '/o2o/shopadmin/getshopinitinfo';
-	var registerShopUrl = 'o2o/shopadmin/registershop';
-	alert(initUrl);
+	var registerShopUrl = '/o2o/shopadmin/registershop';
 	getShopInitInfo();
 	function getShopInitInfo(){
 		$.getJSON(initUrl, function(data){
@@ -55,6 +54,12 @@ $(function(){
 		// 将shop json对象转成字符流保存至表单对象key为shopStr的的键值对里
 		formData.append('shopStr', JSON.stringify(shop));
 		
+		var verifyCodeActual = $('#j_captcha').val();
+		if(!verifyCodeActual){
+			$.toast("请输入验证码！");
+			return;
+		}
+		formData.append('verifyCodeActual', verifyCodeActual);
 		// 将数据提交至后台处理相关操作
 		$.ajax({
 			url : registerShopUrl,
@@ -69,6 +74,8 @@ $(function(){
 				} else {
 					$.toast('提交失败！' + data.errMsg);
 				}
+				//提交成功与否都需要更好验证码
+				$('#captcha_img').click();
 			}
 		});
 	});	

@@ -9,11 +9,10 @@
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 	<!-- 配置SpringMVC -->
-	<!-- 1.开启SpringMVC注解模式 ,自动识别controller类，不需要在配置文件配置bean-->
+	<!-- 1.开启SpringMVC注解模式 ,自动识别controller类，不需要在配置文件配置bean -->
 	<mvc:annotation-driven />
 
-	<!-- 2.静态资源默认servlet配置 (1)加入对静态资源的处理：js,gif,png (2)允许使用"/"做整体映射
-	resources下的静态资源spring-mvc不需要拦截，交给默认的servlet进行处理 -->
+	<!-- 2.静态资源默认servlet配置 (1)加入对静态资源的处理：js,gif,png (2)允许使用"/"做整体映射 resources下的静态资源spring-mvc不需要拦截，交给默认的servlet进行处理 -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:default-servlet-handler />
 
@@ -22,6 +21,15 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/html/"></property>
 		<property name="suffix" value=".html"></property>
+	</bean>
+
+	<!-- 文件上传解析器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8"></property>
+		<!-- 1024 * 1024 * 20 = 20M -->
+		<property name="maxUploadSize" value="20971520"></property>
+		<property name="maxInMemorySize" value="20971520"></property>
 	</bean>
 
 	<!-- 4.扫描web相关的bean -->
