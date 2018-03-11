@@ -110,6 +110,26 @@ public class ImageUtil {
 		String nowTimeStr = sDateFormat.format(new Date());
 		return nowTimeStr + randomNum;
 	}
+	
+	/**
+	 * storePath是文件的路径还是目录的路径， 如果storePath是文件路径则删除该文件，
+	 * 如果storePath是目录路径则删除该目录下的所有文件
+	 * 
+	 * @param storePath
+	 */
+	public static void deleteFileOrPath(String storePath){
+		File fileOrPath = new File(PathUtil.getImgBasePath() + storePath);
+		if(fileOrPath.exists()){
+			if(fileOrPath.isDirectory()){
+				File file[] = fileOrPath.listFiles();
+				for (int i = 0; i < file.length; i++) {
+					file[i].delete();
+				}
+			}
+		}
+		//目录也删除
+		fileOrPath.delete();
+	}
 
 	public static void main(String[] args) throws IOException{
 		String basePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
@@ -119,5 +139,4 @@ public class ImageUtil {
 			.watermark(Positions.BOTTOM_RIGHT,ImageIO.read(new File(basePath + "/watermark.jpg")) , 0.5f)
 			.outputQuality(0.8f).toFile("D:/java/project/imooc/images/2.jpg");
 	}
-
 }

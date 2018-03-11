@@ -18,6 +18,14 @@ public class ShopDaoTest extends BaseTest{
 	private ShopDao shopDao;
 	
 	@Test
+	public void testQueryByShopId(){
+		Shop shop = shopDao.queryByShopId(2);
+		System.out.println(shop.getArea().getAreaName());
+		System.out.println(shop.getArea().getAreaId());
+		System.out.println(shop.getArea().getPriority());
+	}
+	
+	@Test
 	public void testInsertShop(){
 		Shop shop = new Shop();
 		Area area = new Area();
