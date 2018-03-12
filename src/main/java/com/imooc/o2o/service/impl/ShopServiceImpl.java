@@ -1,8 +1,11 @@
 package com.imooc.o2o.service.impl;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,7 @@ import com.imooc.o2o.enums.ShopStateEnum;
 import com.imooc.o2o.exception.ShopOperationException;
 import com.imooc.o2o.service.ShopService;
 import com.imooc.o2o.util.ImageUtil;
+import com.imooc.o2o.util.PageCalculator;
 import com.imooc.o2o.util.PathUtil;
 
 @Service
@@ -102,5 +106,21 @@ public class ShopServiceImpl implements ShopService {
 		} catch (Exception e) {
 			throw new ShopOperationException("modifyShop error:" + e.getMessage());
 		}
+	}
+
+	@Override
+	public ShopExecution getShopList(Shop shopCondition, int pageIndex, int pageSize) {
+		int rowIndex = PageCalculator.calculateRowIndex(pageIndex, pageSize);
+		List<Shop> listShop = shopDao.queryShopList(shopCondition, rowIndex, pageSize);
+		int count = shopDao.queryShopCount(shopCondition);
+		
+		ShopExecution shopExecution = new ShopExecution();
+		if(listShop != null){
+			shopExecution.setCount(count);
+			shopExecution.setShopList(listShop);
+		}else{
+			shopExecution.setState(ShopStateEnum.INNER_ERROR.getState());
+		}
+		return shopExecution;
 	}
 }
