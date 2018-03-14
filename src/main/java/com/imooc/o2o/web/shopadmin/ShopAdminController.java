@@ -36,5 +36,17 @@ public class ShopAdminController {
 		//已在spring-web.xml里面配置了前后缀，这里只需要配置一部分路径
 		return "shop/productcategorymanagement";
 	}
+	
+	@RequestMapping(value = "/productoperation")
+	public String productOperation() {
+		// 转发至商品添加/编辑页面
+		return "shop/productoperation";
+	}
+	
+	@RequestMapping(value = "/productmanagement")
+	public String productManagement() {
+		// 转发至商品管理页面
+		return "shop/productmanagement";
+	}
 
 }

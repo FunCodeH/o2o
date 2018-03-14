@@ -239,6 +239,7 @@ public class ShopManagementController {
 		
 		//1、接受并转化相应得参数，包括商铺信息于图片信息
 		String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
+		//json转对象
 		ObjectMapper mapper = new ObjectMapper();
 		Shop shop = null;
 		try{
