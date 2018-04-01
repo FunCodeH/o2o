@@ -54,13 +54,25 @@
 		tb_shop_category sc
 		<where>
 			<if
-				test="shopCondition.area != null and shopCondition.area.areaId != null">
-				and s.area_id = #{shopCondition.area.areaId}
-			</if>
-			<if
-				test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
+				test="shopCondition.shopCategory != null and 
+			shopCondition.shopCategory.shopCategoryId != null">
 				and s.shop_category_id =
 				#{shopCondition.shopCategory.shopCategoryId}
+			</if>
+			<if
+				test="shopCondition.shopCategory != null 
+			and shopCondition.shopCategory.parent!=null 
+			and shopCondition.shopCategory.parent.shopCategoryId !=null">
+				and s.shop_category_id in (select shop_category_id from
+				tb_shop_category
+				WHERE parent_id =
+				#{shopCondition.shopCategory.parent.shopCategoryId})
+			</if>
+			<if
+				test="shopCondition.area != null and 
+			shopCondition.area.areaId != null">
+				and s.area_id =
+				#{shopCondition.area.areaId}
 			</if>
 			<if test="shopCondition.shopName != null">
 				and s.shop_name like '%${shopCondition.shopName}%'
@@ -77,9 +89,9 @@
 			AND
 			s.shop_category_id = sc.shop_category_id
 		</where>
-		order by
-		s.priority desc
-		Limit #{rowIndex}, #{pageSize}
+		ORDER BY
+		s.priority DESC
+		LIMIT #{rowIndex},#{pageSize};
 	</select>
 	<select id="queryShopCount" resultType="int">
 		SELECT
@@ -90,13 +102,25 @@
 		tb_shop_category sc
 		<where>
 			<if
-				test="shopCondition.area != null and shopCondition.area.areaId != null">
-				and s.area_id = #{shopCondition.area.areaId}
-			</if>
-			<if
-				test="shopCondition.shopCategory != null and shopCondition.shopCategory.shopCategoryId != null">
+				test="shopCondition.shopCategory != null and 
+			shopCondition.shopCategory.shopCategoryId != null">
 				and s.shop_category_id =
 				#{shopCondition.shopCategory.shopCategoryId}
+			</if>
+			<if
+				test="shopCondition.shopCategory != null 
+			and shopCondition.shopCategory.parent!=null 
+			and shopCondition.shopCategory.parent.shopCategoryId !=null">
+				and s.shop_category_id in (select shop_category_id from
+				tb_shop_category
+				WHERE parent_id =
+				#{shopCondition.shopCategory.parent.shopCategoryId})
+			</if>
+			<if
+				test="shopCondition.area != null and 
+			shopCondition.area.areaId != null">
+				and s.area_id =
+				#{shopCondition.area.areaId}
 			</if>
 			<if test="shopCondition.shopName != null">
 				and s.shop_name like '%${shopCondition.shopName}%'
@@ -114,36 +138,6 @@
 			s.shop_category_id = sc.shop_category_id
 		</where>
 	</select>
-	<insert id="insertShop" useGeneratedKeys="true" keyColumn="shop_id"
-		keyProperty="shopId">
-		INSERT INTO
-		tb_shop(owner_id, area_id, shop_category_id,
-		shop_name, shop_desc, shop_addr,
-		phone, shop_img, priority,
-		create_time, last_edit_time, enable_status,
-		advice)
-		VALUES
-		(#{owner.userId},#{area.areaId},#{shopCategory.shopCategoryId},#{shopName},
-		#{shopDesc},#{shopAddr},#{phone},#{shopImg},#{priority},#{createTime},#{lastEditTime},
-		#{enableStatus},#{advice})
-	</insert>
-	<update id="updateShop" parameterType="com.imooc.o2o.entity.Shop">
-		update tb_shop
-		<set>
-			<if test="shopName != null">shop_name=#{shopName},</if>
-			<if test="shopDesc != null">shop_desc=#{shopDesc},</if>
-			<if test="shopAddr != null">shop_addr=#{shopAddr},</if>
-			<if test="phone != null">phone=#{phone},</if>
-			<if test="shopImg != null">shop_img=#{shopImg},</if>
-			<if test="priority != null">priority=#{priority},</if>
-			<if test="lastEditTime != null">last_edit_time=#{lastEditTime},</if>
-			<if test="enableStatus != null">enable_status=#{enableStatus},</if>
-			<if test="advice != null">advice=#{advice},</if>
-			<if test="area != null">area_id=#{area.areaId},</if>
-			<if test="shopCategory != null">shop_category_id=#{shopCategory.shopCategoryId}</if>
-		</set>
-		where shop_id=#{shopId}
-	</update>
 	<select id="queryByShopId" resultMap="shopMap" parameterType="Long">
 		SELECT
 		s.shop_id,
@@ -172,4 +166,34 @@
 		AND
 		s.shop_id = #{shopId}
 	</select>
+	<insert id="insertShop" useGeneratedKeys="true" keyColumn="shop_id"
+		keyProperty="shopId">
+		INSERT INTO
+		tb_shop(owner_id, area_id, shop_category_id,
+		shop_name, shop_desc, shop_addr,
+		phone, shop_img, priority,
+		create_time, last_edit_time, enable_status,
+		advice)
+		VALUES
+		(#{owner.userId},#{area.areaId},#{shopCategory.shopCategoryId},#{shopName},
+		#{shopDesc},#{shopAddr},#{phone},#{shopImg},#{priority},
+		#{createTime},#{lastEditTime}, #{enableStatus},#{advice})
+	</insert>
+	<update id="updateShop" parameterType="com.imooc.o2o.entity.Shop">
+		update tb_shop
+		<set>
+			<if test="shopName != null">shop_name=#{shopName},</if>
+			<if test="shopDesc != null">shop_desc=#{shopDesc},</if>
+			<if test="shopAddr != null">shop_addr=#{shopAddr},</if>
+			<if test="phone != null">phone=#{phone},</if>
+			<if test="shopImg != null">shop_img=#{shopImg},</if>
+			<if test="priority != null">priority=#{priority},</if>
+			<if test="lastEditTime != null">last_edit_time=#{lastEditTime},</if>
+			<if test="enableStatus != null">enable_status=#{enableStatus},</if>
+			<if test="advice != null">advice=#{advice},</if>
+			<if test="area != null">area_id=#{area.areaId},</if>
+			<if test="shopCategory != null">shop_category_id=#{shopCategory.shopCategoryId}</if>
+		</set>
+		where shop_id=#{shopId}
+	</update>
 </mapper>
